@@ -2,6 +2,7 @@
 <h1>ToDo List</h1>
 
 {% block container %}
+<a href="/add">Add Todo</a>
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -18,15 +19,24 @@
                 <td>{{ todo.description }}</td>
                 <td>
                     
-                    {% if todo.priority==1 %}
+                    {% if todo.priority == 1 %}
                         <b class="text-danger">{{ todo.get_priority_display }}</b>
-                    {% elif todo.priority==2 %}
+                    {% elif todo.priority == 2 %}
                         <b class="text-warning">{{ todo.get_priority_display }}</b>
                     {% else %}
                         <b class="text-success">{{ todo.get_priority_display }}</b>
                     {% endif %}
                 </td>
-                <td>{{ todo.get_status_display }}</td>
+                <td>
+
+                    {% if todo.status == "c" %}
+                    <b class="text-danger">{{ todo.get_status_display }}</b>
+                    {% elif todo.status == "w" %}
+                    <b class="text-warning">{{ todo.get_status_display }}</b>
+                    {% else %}
+                    <b class="text-success">{{ todo.get_status_display }}</b>
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </tbody>
