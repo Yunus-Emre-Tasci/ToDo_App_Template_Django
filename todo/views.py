@@ -18,3 +18,15 @@ def todo_add(request):
         return redirect("todo_list")
     
     return render(request,"add.html",{"form":form})
+
+def todo_update(request,pk):
+    todo=Todo.objects.get(id=pk)
+    form=TodoForm(instance=todo)
+    if request.method=="POST":
+        form=TodoForm(request.POST,instance=todo)
+        if form.is_valid():
+            form.save()
+        return redirect("todo_list")
+        
+    return render(request,"update.html",{"form":form,"todo":todo})    
+    

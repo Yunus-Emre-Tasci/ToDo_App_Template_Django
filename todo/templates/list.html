@@ -37,6 +37,10 @@
                     <b class="text-success">{{ todo.get_status_display }}</b>
                     {% endif %}
                 </td>
+                <td>
+                    <a href="/update/{{ todo.id }}">Update</a>
+                    <a href="/delete/{{ todo.id }}" onclick="return confirm('are you sure?')">Delete</a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
