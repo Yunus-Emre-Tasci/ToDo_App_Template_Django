@@ -28,5 +28,11 @@ def todo_update(request,pk):
             form.save()
         return redirect("todo_list")
         
-    return render(request,"update.html",{"form":form,"todo":todo})    
+    return render(request,"update.html",{"form":form,"todo":todo})  
+
+def todo_delete(request,pk):
+    todo=Todo.objects.get(id=pk)
+    todo.delete()
+    return redirect("todo_list")
+        
     
