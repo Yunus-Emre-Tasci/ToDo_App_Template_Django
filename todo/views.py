@@ -1,40 +1,21 @@
 from django.shortcuts import render,redirect
+from django.urls import reverse_lazy
 from .models import *
 from .forms import *
 from django.contrib import messages
+from django.views.generic import (
+    ListView,
+    CreateView,
+    UpdateView,
+    DeleteView
+)
 
 # Create your views here.
-def todo_list(request):
-    todos=Todo.objects.all()
-    context={
-        "todos":todos
-    }
-    
-    return render(request,"list.html",context)
 
-def todo_add(request):
-    form=TodoForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        messages.success(request,"Success")
-        return redirect("todo_list")
-    
-    return render(request,"add.html",{"form":form})
+class TodoListView(ListView):
+    model=Todo
 
-def todo_update(request,pk):
-    todo=Todo.objects.get(id=pk)
-    form=TodoForm(instance=todo)
-    if request.method=="POST":
-        form=TodoForm(request.POST,instance=todo)
-        if form.is_valid():
-            form.save()
-        return redirect("todo_list")
-        
-    return render(request,"update.html",{"form":form,"todo":todo})  
-
-def todo_delete(request,pk):
-    todo=Todo.objects.get(id=pk)
-    todo.delete()
-    return redirect("todo_list")
-        
-    
+class TodoCreateView(CreateView):
+    model=Todo
+    form_class=TodoForm
+    success_url=reverse_lazy("todo_list")    
